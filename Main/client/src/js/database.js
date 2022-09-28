@@ -20,11 +20,16 @@ export const putDb = async (content) => {
   const storeDB = transDB.objectStore('contact');
   const request = storeDB.put(content);
   const result = await request
-
-  return result
 };
 
 // TODO: Add logic for a method that gets all the content from the database
-export const getDb = async () => console.error('getDb not implemented');
+export const getDb = async () => {
+  const touchDB = await openDB('contact', 1);
+  const transDB = touchDB.transaction('contact', 'readonly');
+  const storeDB= transDB.objectStore('contact');
+  const request = storeDB.getAll();
+  const result = await request;
+  return result
+};
 
 initdb();
